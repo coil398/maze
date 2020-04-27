@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"strings"
+	"time"
 )
 
 const (
@@ -103,10 +104,7 @@ func display(width int, height int, grid [][]int) {
 	}
 }
 
-func main() {
-	width := 12
-	height := 20
-
+func initGrid(width int, height int) [][]int {
 	grid := make([][]int, height)
 	for i := 0; i < height; i++ {
 		grid[i] = make([]int, width)
@@ -118,9 +116,23 @@ func main() {
 		}
 	}
 
+	return grid
+}
+
+func main() {
+	width := 12
+	height := 20
+
+	unixTime := time.Now().Unix()
+	rand.Seed(unixTime)
+
+	grid := initGrid(width, height)
+
 	carve_passages_from(0, 0, grid)
 
 	// debugDisplay(grid)
 
 	display(width, height, grid)
+
+	fmt.Printf("width: %d, height: %d, seed: %d", width, height, unixTime)
 }
